@@ -61,7 +61,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                       height: 700,
                       child: Center(
                         child: Text(
-                          "Comming soon...",
+                          "Coming soon...",
                           style: NeededTextstyles.ultimatemax,
                         ),
                       ),

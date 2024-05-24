@@ -85,24 +85,24 @@ flutter:
   # example:
   fonts:
     - family: Poppins
-      fonts:
-        - asset: fonts/Poppins-Black.ttf
-        - asset: fonts/Poppins-Bold.ttf
-        - asset: fonts/Poppins-ExtraBold.ttf
-        - asset: fonts/Poppins-ExtraLight.ttf
-        - asset: fonts/Poppins-Light.ttf
-        - asset: fonts/Poppins-Medium.ttf
-        - asset: fonts/Poppins-Regular.ttf
-        - asset: fonts/Poppins-SemiBold.ttf
-        - asset: fonts/Poppins-Thin.ttf
-    - family: Oswald
-      fonts:
-        - asset: fonts/Oswald-Bold.ttf
-        - asset: fonts/Oswald-ExtraLight.ttf
-        - asset: fonts/Oswald-Light.ttf
-        - asset: fonts/Oswald-Medium.ttf
-        - asset: fonts/Oswald-Regular.ttf
-        - asset: fonts/Oswald-SemiBold.ttf
+    #   fonts:
+    #     - asset: fonts/Poppins-Black.ttf
+    #     - asset: fonts/Poppins-Bold.ttf
+    #     - asset: fonts/Poppins-ExtraBold.ttf
+    #     - asset: fonts/Poppins-ExtraLight.ttf
+    #     - asset: fonts/Poppins-Light.ttf
+    #     - asset: fonts/Poppins-Medium.ttf
+    #     - asset: fonts/Poppins-Regular.ttf
+    #     - asset: fonts/Poppins-SemiBold.ttf
+    #     - asset: fonts/Poppins-Thin.ttf
+    # - family: Oswald
+    #   fonts:
+    #     - asset: fonts/Oswald-Bold.ttf
+    #     - asset: fonts/Oswald-ExtraLight.ttf
+    #     - asset: fonts/Oswald-Light.ttf
+    #     - asset: fonts/Oswald-Medium.ttf
+    #     - asset: fonts/Oswald-Regular.ttf
+    #     - asset: fonts/Oswald-SemiBold.ttf
     - family: gilroy
       fonts:
         - asset: fonts/Gilroy-SemiBold.ttf
