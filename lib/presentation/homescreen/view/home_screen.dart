@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
 import 'package:portfolio/globalwidgets/customappbar.dart';
 import 'package:portfolio/globalwidgets/contactcard.dart';
+import 'package:portfolio/presentation/about_me_screen/aboutme_screen.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/contentcard1.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/contentcard2.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/contentcard3.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/firstcard.dart';
-import 'package:portfolio/presentation/homescreen/view/widgets/minicards.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/respcard.dart';
 import 'package:portfolio/presentation/homescreen/view/widgets/spacegiven.dart';
+import 'package:portfolio/presentation/project_screen/view/project_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,14 +70,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   firstcard(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 700,
-                      width: maxWidth * 0.9,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.grey.withOpacity(0.4),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AboutmeScreen(),
+                            ));
+                      },
+                      child: Container(
+                        height: 700,
+                        width: maxWidth * 0.9,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.withOpacity(0.4),
+                        ),
+                        child: repcard(),
                       ),
-                      child: repcard(),
                     ),
                   ),
                   SizedBox(
@@ -133,53 +143,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: maxWidth * 0.8,
                     child: Center(
                       child: Text(
-                        "Occasionally, I share insights to help fellow Flutter developers refine my skills and create outstanding applications.",
-                        style: NeededTextstyles.ultimate2,
+                        "These are just the samples,wanna see more.",
+                        style: NeededTextstyles.ultimate3,
                         textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 300,
-                    width: maxWidth * 0.9,
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 3,
-                          itemBuilder: (context, index) => minicards(),
-                          separatorBuilder: (context, index) => SizedBox(
-                            width: 20,
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProjectScreen(),
+                          ));
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 200,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey.withOpacity(0.1),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Show more Projects",
+                            style: NeededTextstyles.littletext,
                           ),
-                        ),
+                          Icon(Icons.arrow_forward)
+                        ],
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    height: 50,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey.withOpacity(0.3),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "Show more Projects",
-                          style: NeededTextstyles.littletext,
-                        ),
-                        Icon(Icons.arrow_forward)
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 200,
+                    height: 230,
                   ),
                   Contactcard()
                 ],

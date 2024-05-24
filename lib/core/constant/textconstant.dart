@@ -15,6 +15,12 @@ class NeededTextstyles {
     fontWeight: FontWeight.w500,
     color: Colors.black,
   );
+  static TextStyle ultimatetext = TextStyle(
+    fontFamily: 'gilroy',
+    fontSize: 40.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
   static TextStyle contactsname = TextStyle(
     fontFamily: 'gilroy',
     fontSize: 45.0,
@@ -33,11 +39,23 @@ class NeededTextstyles {
     fontWeight: FontWeight.w500,
     color: Colors.black,
   );
+  static TextStyle ultimate3 = TextStyle(
+    fontFamily: 'gilroy',
+    fontSize: 38.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
+  );
   static TextStyle ultimatex2 = TextStyle(
     fontFamily: 'gilroy',
     fontSize: 18.0,
     fontWeight: FontWeight.w500,
     color: Colors.white,
+  );
+  static TextStyle ultimatex2dark = TextStyle(
+    fontFamily: 'gilroy',
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+    color: Colors.black,
   );
   static TextStyle Subheading = TextStyle(
     fontFamily: 'gilroy',

@@ -28,7 +28,7 @@ class CustomAppBarDark extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => HomeScreen(),
@@ -44,7 +44,7 @@ class CustomAppBarDark extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => AboutmeScreen(),
@@ -60,7 +60,7 @@ class CustomAppBarDark extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ProjectScreen(),
@@ -76,7 +76,7 @@ class CustomAppBarDark extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ContactScreen(),

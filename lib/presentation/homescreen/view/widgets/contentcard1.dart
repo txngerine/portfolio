@@ -1,12 +1,23 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContentCard1 extends StatelessWidget {
   const ContentCard1({
     super.key,
   });
+
+  void _launchURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $urlString';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +32,37 @@ class ContentCard1 extends StatelessWidget {
               height: 70,
             ),
             Text(
-              "Nice to",
-              style: NeededTextstyles.ultimate1,
+              "A digital platform for reading and",
+              style: NeededTextstyles.ultimatetext,
             ),
             Text(
-              "meet you",
-              style: NeededTextstyles.ultimate1,
+              "exploring various manga titles.",
+              style: NeededTextstyles.ultimatetext,
             ),
             SizedBox(
               height: 340,
               width: 500,
             ),
-            Text(
-              "About me",
-              style: NeededTextstyles.ultimate2,
+            InkWell(
+              onTap: () {
+                _launchURL("https://github.com/nyouibou/tachiyomi_clone.git");
+              },
+              child: Row(
+                children: [
+                  Text(
+                    "MangaVerse",
+                    style: NeededTextstyles.ultimate2,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  SvgPicture.asset(
+                    'assets/github.svg',
+                    height: 30,
+                    width: 30,
+                  ),
+                ],
+              ),
             )
           ],
         ),

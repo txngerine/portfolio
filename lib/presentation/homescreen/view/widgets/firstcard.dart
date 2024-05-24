@@ -17,7 +17,7 @@ class firstcard extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "UI/UX Flutter designer crafting seamless and engaging mobile experiences.",
+              "UI/UX designer,Flutter Developer crafting seamless and engaging mobile experiences.",
               style: NeededTextstyles.ultimate1,
               textAlign: TextAlign.center,
             ),

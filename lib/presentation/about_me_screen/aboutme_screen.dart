@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
 import 'package:portfolio/globalwidgets/customappbardark.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/contactscreen_dark.dart';
+import 'package:portfolio/presentation/about_me_screen/view/widgets/expcard.dart';
+import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard.dart';
+import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard2.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutmeScreen extends StatefulWidget {
   const AboutmeScreen({Key? key}) : super(key: key);
@@ -15,6 +19,18 @@ class AboutmeScreen extends StatefulWidget {
 class _AboutmeScreenState extends State<AboutmeScreen> {
   final ScrollController _scrollController = ScrollController();
   final ValueNotifier<bool> _isButtonVisible = ValueNotifier(false);
+  final List<Map<String, dynamic>> skills = [
+    {'name': 'Dart', 'level': 0.90},
+    {'name': 'Flutter', 'level': 0.85},
+    {'name': 'Git', 'level': 0.70},
+    {'name': 'Java', 'level': 0.65},
+  ];
+  final List<Map<String, dynamic>> skills2 = [
+    {'name': 'REST API', 'level': 0.72},
+    {'name': 'Firebase', 'level': 0.80},
+    {'name': 'Hive', 'level': 0.70},
+    {'name': 'Provider', 'level': 0.65},
+  ];
 
   @override
   void initState() {
@@ -26,6 +42,15 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
         _isButtonVisible.value = false;
       }
     });
+  }
+
+  void _launchURL(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $urlString';
+    }
   }
 
   @override
@@ -87,11 +112,10 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                                 image: DecorationImage(
                                     image: AssetImage("assets/main.png"),
                                     fit: BoxFit.fill)),
-                          )
+                          ),
                         ],
                       ),
                       SizedBox(
-                        height: 1000,
                         width: 1200,
                         child: SingleChildScrollView(
                           child: Column(
@@ -122,9 +146,79 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                                 "In essence, I'm a blend of a Flutter developer, a tech enthusiast, and a digital artist, weaving together code, creativity, and curiosity to craft experiences that leave a lasting impression. Join me on this journey as we explore the endless possibilities of the digital realm together.",
                                 style: NeededTextstyles.aboutmecontentwhite,
                               ),
+                              SizedBox(
+                                height: 100,
+                              ),
+
+                              Expcard(),
+                              //newline
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SkillCard(skills: skills),
+                                  SkillCard2(skills2: skills2),
+                                ],
+                              ),
+                              Center(
+                                child: SizedBox(
+                                  height: 100,
+                                  width: 400,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          _launchURL(
+                                              'mailto:akshaits4@gmail.com');
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.white),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Text(
+                                              "Hire Me",
+                                              style: NeededTextstyles
+                                                  .ultimatex2dark,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          _launchURL(
+                                              'https://drive.google.com/file/d/13-MTP6y4LvoHyvWSmiJ0Ci9uafi0YIa3/view?usp=drive_link');
+                                        },
+                                        // https://drive.google.com/file/d/13-MTP6y4LvoHyvWSmiJ0Ci9uafi0YIa3/view?usp=drive_link
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: Colors.white),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(15.0),
+                                            child: Text(
+                                              "Download CV",
+                                              style: NeededTextstyles
+                                                  .ultimatex2dark,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 200,
                       ),
                       ContactcardDark(),
                     ],
