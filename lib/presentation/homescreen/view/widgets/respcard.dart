@@ -61,19 +61,34 @@ class RepCard extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         bool isSmallScreen = constraints.maxWidth < 600;
+        bool isTablet = constraints.maxWidth >= 600 && constraints.maxWidth < 1024;
 
         // Define responsive text style
         TextStyle responsiveTextStyle(TextStyle baseStyle) {
+          double fontSize;
+
+          if (isSmallScreen) {
+            fontSize = 24.0; // Smaller font size for mobile
+          } else if (isTablet) {
+            fontSize = 32.0; // Medium font size for tablets
+          } else {
+            fontSize = 50.0; // Default font size for larger screens
+          }
+
           return baseStyle.copyWith(
-            fontSize: isSmallScreen
-                ? 40.0
-                : 50.0, // Adjust font sizes: smaller for mobile
+            fontSize: fontSize,
           );
         }
 
         // Define responsive image size
         double imageSize() {
-          return isSmallScreen ? constraints.maxWidth * 0.8 : 700.0;
+          if (isSmallScreen) {
+            return constraints.maxWidth * 0.8; // 80% of screen width for mobile
+          } else if (isTablet) {
+            return constraints.maxWidth * 0.5; // 50% of screen width for tablets
+          } else {
+            return 700.0; // Fixed size for larger screens
+          }
         }
 
         return isSmallScreen
