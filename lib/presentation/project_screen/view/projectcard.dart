@@ -54,7 +54,8 @@ class _ProjectCardState extends State<ProjectCard> {
         TextStyle responsiveTextStyle(TextStyle baseStyle) {
           return baseStyle.copyWith(
             fontSize: isSmallScreen ? 20.0 : 30.0,
-            color: Colors.black87, // Darker text for contrast on light background
+            color:
+                Colors.black87, // Darker text for contrast on light background
           );
         }
 
@@ -81,28 +82,31 @@ class _ProjectCardState extends State<ProjectCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      widget.project.name ?? "No Project Name", // Project name from model
+                      widget.project.name ??
+                          "No Project Name", // Project name from model
                       style: responsiveTextStyle(
                           TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     Text(
-                      widget.project.description ?? 'No description available', // Project description from model
+                      widget.project.description ??
+                          'No description available', // Project description from model
                       style: responsiveTextStyle(TextStyle()),
                     ),
                     SizedBox(height: 20),
-                    Container(
-                      height: imageSize(),
-                      width: imageSize(),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/android.gif"), // Static image for now
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   height: imageSize(),
+                    //   width: imageSize(),
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage("assets/android.gif"), // Static image for now
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    // ),
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: () => _launchURL(widget.project.htmlUrl), // GitHub link from model
+                      onTap: () => _launchURL(
+                          widget.project.htmlUrl), // GitHub link from model
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -130,23 +134,26 @@ class _ProjectCardState extends State<ProjectCard> {
                       children: [
                         SizedBox(height: 70),
                         Text(
-                          widget.project.name ?? "No Project Name", // Project name from model
+                          widget.project.name ??
+                              "No Project Name", // Project name from model
                           style: responsiveTextStyle(
                               TextStyle(fontWeight: FontWeight.bold)),
                         ),
                         Text(
-                          widget.project.description ?? 'No description available', // Project description from model
+                          widget.project.description ??
+                              'No description available', // Project description from model
                           style: responsiveTextStyle(TextStyle()),
                         ),
                         SizedBox(height: 340),
                         InkWell(
-                          onTap: () => _launchURL(widget.project.htmlUrl), // GitHub link from model
+                          onTap: () => _launchURL(
+                              widget.project.htmlUrl), // GitHub link from model
                           child: Row(
                             children: [
                               Text(
                                 "View on GitHub",
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.blue),
+                                style:
+                                    TextStyle(fontSize: 16, color: Colors.blue),
                               ),
                               SizedBox(width: 10),
                               SvgPicture.asset(
@@ -159,16 +166,17 @@ class _ProjectCardState extends State<ProjectCard> {
                         ),
                       ],
                     ),
-                    Container(
-                      height: imageSize(),
-                      width: imageSize(),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/android.gif"), // Static image for now
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   height: imageSize(),
+                    //   width: imageSize(),
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: AssetImage(
+                    //           "assets/android.gif"), // Static image for now
+                    //       fit: BoxFit.cover,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
         );
