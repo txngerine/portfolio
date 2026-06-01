@@ -1,14 +1,13 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
+import 'package:portfolio/core/utils/launch_utils.dart';
 import 'package:portfolio/globalwidgets/customappbardark.dart';
 import 'package:portfolio/globalwidgets/animations/fade_in_slide.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/contactscreen_dark.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/expcard.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard2.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AboutmeScreen extends StatefulWidget {
   const AboutmeScreen({Key? key}) : super(key: key);
@@ -46,13 +45,6 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
-  }
-
-  void _launchURL(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    }
   }
 
   double _getResponsiveFontSize(BuildContext context, List<double> sizes) {
@@ -243,7 +235,7 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () => _launchURL('mailto:${AppConstants.email}'),
+                                onTap: () => launchURL('mailto:${AppConstants.email}'),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -258,7 +250,7 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                               ),
                               SizedBox(width: 16),
                               InkWell(
-                                onTap: () => _launchURL(
+                                onTap: () => launchURL(
                                     'https://drive.google.com/file/d/14ip97V-kMH0YKQnKYeTsFJ0jPkrGuLnX/view?usp=drive_link'),
                                 child: Container(
                                   decoration: BoxDecoration(

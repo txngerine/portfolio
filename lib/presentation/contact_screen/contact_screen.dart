@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
+import 'package:portfolio/core/controllers/contact_controller.dart';
 import 'package:portfolio/globalwidgets/customappbar.dart';
 import 'package:portfolio/globalwidgets/contactcard.dart';
 import 'package:portfolio/globalwidgets/animations/fade_in_slide.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -15,37 +16,18 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
-  final ScrollController _scrollController = ScrollController();
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _messageController = TextEditingController();
+  late final ContactController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(ContactController());
+  }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _nameController.dispose();
-    _emailController.dispose();
-    _messageController.dispose();
+    Get.delete<ContactController>();
     super.dispose();
-  }
-
-  void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      final name = Uri.encodeComponent(_nameController.text);
-      final email = Uri.encodeComponent(_emailController.text);
-      final message = Uri.encodeComponent(_messageController.text);
-      final mailtoUrl =
-          'mailto:${AppConstants.email}?subject=Portfolio Contact from $name&body=$message%0A%0AFrom: $name ($email)';
-      _launchURL(mailtoUrl);
-    }
-  }
-
-  void _launchURL(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    }
   }
 
   @override
@@ -86,7 +68,7 @@ class _ContactScreenState extends State<ContactScreen> {
             double screenHeight = constraints.maxHeight;
 
             return SingleChildScrollView(
-              controller: _scrollController,
+              controller: controller.scrollController,
               scrollDirection: Axis.vertical,
               child: Center(
                 child: Column(
@@ -107,7 +89,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         height: screenHeight * 0.7,
                         width: min(maxWidth * 0.9, 1000),
                         child: Form(
-                          key: _formKey,
+                          key: controller.formKey,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -116,7 +98,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 style: NeededTextstyles.questionheading1,
                               ),
                               TextFormField(
-                                controller: _nameController,
+                                controller: controller.nameController,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide(),
@@ -133,7 +115,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 style: NeededTextstyles.questionheading1,
                               ),
                               TextFormField(
-                                controller: _emailController,
+                                controller: controller.emailController,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide(),
@@ -152,7 +134,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 style: NeededTextstyles.questionheading1,
                               ),
                               TextFormField(
-                                controller: _messageController,
+                                controller: controller.messageController,
                                 maxLines: 5,
                                 decoration: InputDecoration(
                                   border: OutlineInputBorder(
@@ -169,7 +151,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   InkWell(
-                                    onTap: _submitForm,
+                                    onTap: controller.submitForm,
                                     child: Container(
                                       decoration:
                                           BoxDecoration(color: Colors.black),

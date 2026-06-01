@@ -1,48 +1,12 @@
-import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:gif_view/gif_view.dart';
+import 'package:portfolio/core/utils/launch_utils.dart';
 import 'package:portfolio/repository/model/githubmodel.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class ProjectCard extends StatefulWidget {
+class ProjectCard extends StatelessWidget {
   final GitHubProject project;
 
   const ProjectCard({Key? key, required this.project}) : super(key: key);
-
-  @override
-  _ProjectCardState createState() => _ProjectCardState();
-}
-
-class _ProjectCardState extends State<ProjectCard> {
-  final GifController _controller = GifController();
-  Color _containerColor = Colors.white;
-  final Random _random = Random();
-
-  @override
-  void initState() {
-    super.initState();
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        _containerColor = Color.fromRGBO(
-          200 + _random.nextInt(56),
-          200 + _random.nextInt(56),
-          200 + _random.nextInt(56),
-          0.4,
-        );
-      });
-    });
-  }
-
-  Future<void> _launchURL(String url) async {
-    final Uri uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +24,7 @@ class _ProjectCardState extends State<ProjectCard> {
         return Container(
           padding: EdgeInsets.all(isSmallScreen ? 16.0 : 32.0),
           decoration: BoxDecoration(
-            color: _containerColor,
+            color: Colors.white.withOpacity(0.1),
             borderRadius: BorderRadius.circular(12.0),
             boxShadow: [
               BoxShadow(
@@ -75,17 +39,17 @@ class _ProjectCardState extends State<ProjectCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      widget.project.name,
+                      project.name,
                       style: responsiveTextStyle(
                           TextStyle(fontWeight: FontWeight.bold)),
                     ),
                     Text(
-                      widget.project.description,
+                      project.description,
                       style: responsiveTextStyle(TextStyle()),
                     ),
                     SizedBox(height: 20),
                     InkWell(
-                      onTap: () => _launchURL(widget.project.htmlUrl),
+                      onTap: () => launchURL(project.htmlUrl),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -113,17 +77,17 @@ class _ProjectCardState extends State<ProjectCard> {
                       children: [
                         SizedBox(height: 70),
                         Text(
-                          widget.project.name,
+                          project.name,
                           style: responsiveTextStyle(
                               TextStyle(fontWeight: FontWeight.bold)),
                         ),
                         Text(
-                          widget.project.description,
+                          project.description,
                           style: responsiveTextStyle(TextStyle()),
                         ),
                         SizedBox(height: 340),
                         InkWell(
-                          onTap: () => _launchURL(widget.project.htmlUrl),
+                          onTap: () => launchURL(project.htmlUrl),
                           child: Row(
                             children: [
                               Text(
@@ -147,11 +111,5 @@ class _ProjectCardState extends State<ProjectCard> {
         );
       },
     );
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 }

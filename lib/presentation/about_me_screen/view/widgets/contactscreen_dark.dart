@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/core/utils/launch_utils.dart';
 
 class ContactcardDark extends StatelessWidget {
   const ContactcardDark({
     super.key,
   });
-
-  void _launchURL(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $urlString';
-    }
-  }
 
   double _getResponsiveWidth(BuildContext context, List<double> widths) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -96,7 +87,7 @@ class ContactcardDark extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        _launchURL('mailto:${AppConstants.email}');
+                        launchURL('mailto:${AppConstants.email}');
                       },
                       child: Text(
                         "Email",
@@ -106,7 +97,7 @@ class ContactcardDark extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _launchURL('https://instagram.com/akshaiiii.i');
+                        launchURL('https://instagram.com/akshaiiii.i');
                       },
                       child: Text(
                         "Instagram",
@@ -116,7 +107,7 @@ class ContactcardDark extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _launchURL('https://twitter.com/yourusername');
+                        launchURL('https://twitter.com/yourusername');
                       },
                       child: Text(
                         "Twitter",
@@ -126,7 +117,7 @@ class ContactcardDark extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _launchURL(
+                        launchURL(
                             'https://github.com/${AppConstants.githubUsername}');
                       },
                       child: Text(
@@ -137,7 +128,7 @@ class ContactcardDark extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _launchURL('https://linkedin.com/in/akshai-t-s');
+                        launchURL('https://linkedin.com/in/akshai-t-s');
                       },
                       child: Text(
                         "LinkedIn",

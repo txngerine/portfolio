@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/core/utils/launch_utils.dart';
 
 class Contactcard extends StatelessWidget {
   const Contactcard({super.key});
-
-  void _launchURL(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +91,7 @@ class Contactcard extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 6),
           child: InkWell(
-            onTap: () => _launchURL(link.$2),
+            onTap: () => launchURL(link.$2),
             child: Text(
               link.$1,
               style: NeededTextstyles.contactsname

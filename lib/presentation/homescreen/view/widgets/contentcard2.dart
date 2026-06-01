@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio/core/utils/launch_utils.dart';
 
 class ContentCard2 extends StatelessWidget {
   const ContentCard2({
     super.key,
   });
-
-  void _launchURL(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $urlString';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +49,7 @@ class ContentCard2 extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      _launchURL("https://github.com/${AppConstants.githubUsername}/flareapp.git");
+                      launchURL("https://github.com/${AppConstants.githubUsername}/flareapp.git");
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +95,7 @@ class ContentCard2 extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          _launchURL(
+                          launchURL(
                               "https://github.com/${AppConstants.githubUsername}/flareapp.git");
                         },
                         child: Row(
