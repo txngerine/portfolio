@@ -27,7 +27,7 @@ class ProjectController extends GetxController {
       final result = await _gitHubService.fetchProjects();
       projects.assignAll(result);
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load projects: $e');
+      debugPrint('Failed to load projects: $e');
     } finally {
       isLoading(false);
     }
