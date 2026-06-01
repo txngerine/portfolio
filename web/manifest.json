@@ -1,11 +1,11 @@
 {
-    "name": "portfolio",
-    "short_name": "portfolio",
+    "name": "Akshay T S - Portfolio",
+    "short_name": "Portfolio",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "description": "Portfolio of Akshay T S - Flutter Developer, UI/UX Designer crafting seamless mobile experiences.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

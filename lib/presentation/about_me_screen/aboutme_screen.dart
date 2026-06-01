@@ -1,14 +1,13 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, sort_child_properties_last
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
 import 'package:portfolio/globalwidgets/customappbardark.dart';
+import 'package:portfolio/globalwidgets/animations/fade_in_slide.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/contactscreen_dark.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/expcard.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard.dart';
 import 'package:portfolio/presentation/about_me_screen/view/widgets/skillcard2.dart';
-import 'package:portfolio/presentation/contact_screen/contact_screen.dart';
-import 'package:portfolio/presentation/homescreen/view/home_screen.dart';
-import 'package:portfolio/presentation/project_screen/view/project_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutmeScreen extends StatefulWidget {
@@ -20,7 +19,6 @@ class AboutmeScreen extends StatefulWidget {
 
 class _AboutmeScreenState extends State<AboutmeScreen> {
   final ScrollController _scrollController = ScrollController();
-  final ValueNotifier<bool> _isButtonVisible = ValueNotifier(false);
 
   final List<Map<String, dynamic>> skills = [
     {'name': 'Dart', 'level': 0.90},
@@ -45,55 +43,27 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.offset >= 100) {
-        _isButtonVisible.value = true;
-      } else {
-        _isButtonVisible.value = false;
-      }
-    });
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   void _launchURL(String urlString) async {
     final Uri url = Uri.parse(urlString);
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
-    } else {
-      throw 'Could not launch $urlString';
     }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _isButtonVisible.dispose();
-    super.dispose();
-  }
-
-  void _scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: Duration(seconds: 1),
-      curve: Curves.easeInOut,
-    );
   }
 
   double _getResponsiveFontSize(BuildContext context, List<double> sizes) {
     double screenWidth = MediaQuery.of(context).size.width;
-    if (screenWidth >= 1200) {
-      return sizes[0]; // Large screens
-    } else if (screenWidth >= 800) {
-      return sizes[1]; // Medium screens
-    } else {
-      return sizes[2]; // Small screens
-    }
+    if (screenWidth >= 1200) return sizes[0];
+    if (screenWidth >= 800) return sizes[1];
+    return sizes[2];
   }
 
   @override
   Widget build(BuildContext context) {
-    double aboutmeFontSize = _getResponsiveFontSize(context, [26, 22, 18]);
     double ultimatemaxFontSize = _getResponsiveFontSize(context, [80, 50, 30]);
     bool isMobile = MediaQuery.of(context).size.width < 800;
 
@@ -103,15 +73,14 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
         appBar: CustomAppBarD(),
         endDrawer: isMobile
             ? Drawer(
-                backgroundColor:
-                    Colors.black, // Set drawer background color to black
+                backgroundColor: Colors.black,
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: <Widget>[
-                    _buildDrawerItem(context, 'Home', HomeScreen()),
-                    _buildDrawerItem(context, 'About Me', AboutmeScreen()),
-                    _buildDrawerItem(context, 'Projects', ProjectScreen()),
-                    _buildDrawerItem(context, 'Contact', ContactScreen()),
+                    _buildDrawerItem(context, 'Home', '/home'),
+                    _buildDrawerItem(context, 'About Me', '/about'),
+                    _buildDrawerItem(context, 'Projects', '/projects'),
+                    _buildDrawerItem(context, 'Contact', '/contact'),
                   ],
                 ),
               )
@@ -129,20 +98,28 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       if (isMobile) ...[
-                        Container(
-                          height: maxWidth > 800 ? 500 : maxWidth / 1.6,
-                          width: maxWidth > 800 ? 500 : maxWidth / 1.6,
-                          decoration: BoxDecoration(
+                        FadeInSlide(
+                          delay: Duration(milliseconds: 200),
+                          child: Container(
+                            height: maxWidth / 1.6,
+                            width: maxWidth / 1.6,
+                            decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage("assets/main.png"),
-                                  fit: BoxFit.fill)),
+                                image: AssetImage("assets/main.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
                         ),
                         SizedBox(height: 16),
-                        Text(
-                          "Hey there!   ",
-                          style: NeededTextstyles.ultimatemaxwhite
-                              .copyWith(fontSize: ultimatemaxFontSize),
-                          textAlign: TextAlign.center,
+                        FadeInSlide(
+                          delay: Duration(milliseconds: 500),
+                          child: Text(
+                            "Hey there!",
+                            style: NeededTextstyles.ultimatemaxwhite
+                                .copyWith(fontSize: ultimatemaxFontSize),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ] else ...[
                         Row(
@@ -150,137 +127,148 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                           children: [
                             Flexible(
                               flex: 1,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    height: 400,
-                                  ),
-                                  Text(
-                                    "Hey there!   ",
-                                    style: NeededTextstyles.ultimatemaxwhite
-                                        .copyWith(
-                                            fontSize: ultimatemaxFontSize),
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ],
+                              child: FadeInSlide(
+                                delay: Duration(milliseconds: 300),
+                                beginOffset: Offset(-40, 0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    SizedBox(height: 400),
+                                    Text(
+                                      "Hey there!",
+                                      style: NeededTextstyles.ultimatemaxwhite
+                                          .copyWith(fontSize: ultimatemaxFontSize),
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(width: 16),
                             Flexible(
                               flex: 1,
-                              child: Container(
-                                height: maxWidth > 800 ? 500 : maxWidth / 1.6,
-                                width: maxWidth > 800 ? 500 : maxWidth / 1.6,
-                                decoration: BoxDecoration(
+                              child: FadeInSlide(
+                                delay: Duration(milliseconds: 500),
+                                beginOffset: Offset(40, 0),
+                                child: Container(
+                                  height: 500,
+                                  width: 500,
+                                  decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: AssetImage("assets/main.png"),
-                                        fit: BoxFit.fill)),
+                                      image: AssetImage("assets/main.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ],
-                      SizedBox(height: 16),
+                      SizedBox(height: 32),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           width: maxWidth > 1200 ? 1000 : maxWidth,
                           child: Column(
                             children: [
-                              Text(
-                                "I'm Akshay T S, a passionate Flutter Developer residing in the picturesque landscapes of Kerala, India. With a love for technology and a flair for creativity, I thrive on crafting seamless digital experiences that blend functionality with aesthetic appeal.",
-                                style: NeededTextstyles.aboutmecontentwhite,
+                              FadeInSlide(
+                                delay: Duration(milliseconds: 300),
+                                child: Text(
+                                  "I'm Akshay T S, a passionate Flutter Developer residing in the picturesque landscapes of Kerala, India. With a love for technology and a flair for creativity, I thrive on crafting seamless digital experiences that blend functionality with aesthetic appeal.",
+                                  style: NeededTextstyles.aboutmecontentwhite,
+                                ),
                               ),
                               SizedBox(height: 16),
-                              Text(
-                                "My journey into the world of Flutter development began with a spark of curiosity, and since then, there's been no looking back. I find joy in exploring the depths of Dart and Flutter, leveraging their power to bring ideas to life in the form of captivating mobile applications.",
-                                style: NeededTextstyles.aboutmecontentwhite,
+                              FadeInSlide(
+                                delay: Duration(milliseconds: 400),
+                                child: Text(
+                                  "My journey into the world of Flutter development began with a spark of curiosity, and since then, there's been no looking back. I find joy in exploring the depths of Dart and Flutter, leveraging their power to bring ideas to life.",
+                                  style: NeededTextstyles.aboutmecontentwhite,
+                                ),
                               ),
                               SizedBox(height: 16),
-                              Text(
-                                "Beyond coding, I'm a fervent tech enthusiast, always on the lookout for the latest innovations and trends shaping our digital landscape. Whether it's diving into new frameworks or experimenting with cutting-edge technologies, I'm driven by an insatiable thirst for knowledge and growth.",
-                                style: NeededTextstyles.aboutmecontentwhite,
-                              ),
-                              SizedBox(height: 16),
-                              Text(
-                                "But my interests extend beyond the realm of technology. I'm also deeply passionate about digital art, finding solace and expression in the vibrant world of pixels and brushes. From intricate designs to whimsical illustrations, digital art serves as both a creative outlet and a source of inspiration in my life.",
-                                style: NeededTextstyles.aboutmecontentwhite,
-                              ),
-                              SizedBox(height: 16),
-                              Text(
-                                "In essence, I'm a blend of a Flutter developer, a tech enthusiast, and a digital artist, weaving together code, creativity, and curiosity to craft experiences that leave a lasting impression. Join me on this journey as we explore the endless possibilities of the digital realm together.",
-                                style: NeededTextstyles.aboutmecontentwhite,
+                              FadeInSlide(
+                                delay: Duration(milliseconds: 500),
+                                child: Text(
+                                  "Beyond coding, I'm a fervent tech enthusiast, always on the lookout for the latest innovations. Whether it's diving into new frameworks or experimenting with cutting-edge technologies, I'm driven by an insatiable thirst for knowledge.",
+                                  style: NeededTextstyles.aboutmecontentwhite,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Expcard(),
+                      SizedBox(height: 32),
+                      FadeInSlide(
+                        delay: Duration(milliseconds: 300),
+                        child: Expcard(),
+                      ),
+                      SizedBox(height: 32),
                       isMobile
                           ? Column(
                               children: [
-                                SkillCard(
-                                  skills: skills,
+                                FadeInSlide(
+                                  delay: Duration(milliseconds: 300),
+                                  child: SkillCard(skills: skills),
                                 ),
-                                SkillCard2(
-                                  skills2: skills2,
+                                SizedBox(height: 16),
+                                FadeInSlide(
+                                  delay: Duration(milliseconds: 500),
+                                  child: SkillCard2(skills2: skills2),
                                 ),
                               ],
                             )
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SkillCard(
-                                  skills: skills,
+                                FadeInSlide(
+                                  delay: Duration(milliseconds: 300),
+                                  beginOffset: Offset(-30, 0),
+                                  child: SkillCard(skills: skills),
                                 ),
-                                SkillCard2(
-                                  skills2: skills2,
+                                FadeInSlide(
+                                  delay: Duration(milliseconds: 500),
+                                  beginOffset: Offset(30, 0),
+                                  child: SkillCard2(skills2: skills2),
                                 ),
                               ],
                             ),
-                      SizedBox(height: 32),
-                      Center(
-                        child: SizedBox(
-                          height: 100,
-                          width: 400,
+                      SizedBox(height: 48),
+                      FadeInSlide(
+                        delay: Duration(milliseconds: 400),
+                        child: Center(
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () {
-                                  _launchURL('mailto:akshaits4@gmail.com');
-                                },
+                                onTap: () => _launchURL('mailto:${AppConstants.email}'),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      "Hire Me",
-                                      style: NeededTextstyles.ultimatex2dark,
-                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    "Hire Me",
+                                    style: NeededTextstyles.ultimatex2dark,
                                   ),
                                 ),
                               ),
+                              SizedBox(width: 16),
                               InkWell(
-                                onTap: () {
-                                  _launchURL(
-                                      'https://drive.google.com/file/d/14ip97V-kMH0YKQnKYeTsFJ0jPkrGuLnX/view?usp=drive_link');
-                                },
+                                onTap: () => _launchURL(
+                                    'https://drive.google.com/file/d/14ip97V-kMH0YKQnKYeTsFJ0jPkrGuLnX/view?usp=drive_link'),
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Text(
-                                      "Download CV",
-                                      style: NeededTextstyles.ultimatex2dark,
-                                    ),
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                  ),
+                                  padding: EdgeInsets.all(15),
+                                  child: Text(
+                                    "Download CV",
+                                    style: NeededTextstyles.ultimatex2dark,
                                   ),
                                 ),
                               ),
@@ -288,24 +276,15 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 32),
-                      ContactcardDark(),
+                      SizedBox(height: 48),
+                      FadeInSlide(
+                        delay: Duration(milliseconds: 300),
+                        beginOffset: Offset(0, 50),
+                        child: ContactcardDark(),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            );
-          },
-        ),
-        floatingActionButton: ValueListenableBuilder<bool>(
-          valueListenable: _isButtonVisible,
-          builder: (context, isVisible, child) {
-            return AnimatedOpacity(
-              opacity: isVisible ? 1.0 : 0.0,
-              duration: Duration(milliseconds: 300),
-              child: FloatingActionButton(
-                onPressed: _scrollToTop,
-                child: Icon(Icons.arrow_upward),
               ),
             );
           },
@@ -314,20 +293,13 @@ class _AboutmeScreenState extends State<AboutmeScreen> {
     );
   }
 
-  Widget _buildDrawerItem(BuildContext context, String label, Widget screen) {
+  Widget _buildDrawerItem(BuildContext context, String label, String route) {
     return ListTile(
       title: Text(
         label,
         style: NeededTextstyles.Subheading1da.copyWith(color: Colors.white),
       ),
-      onTap: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => screen,
-          ),
-        );
-      },
+      onTap: () => context.go(route),
     );
   }
 }

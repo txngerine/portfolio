@@ -1,15 +1,12 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:portfolio/globalwidgets/customappbar.dart';
 import 'package:portfolio/globalwidgets/contactcard.dart';
 import 'package:portfolio/repository/githubservice.dart';
 import 'package:portfolio/repository/model/githubmodel.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import '../../../core/constant/textconstant.dart';
-import '../../about_me_screen/aboutme_screen.dart';
-import '../../contact_screen/contact_screen.dart';
-import '../../homescreen/view/home_screen.dart';
 import 'projectcard.dart';
 
 class ProjectScreen extends StatefulWidget {
@@ -31,7 +28,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
       _isButtonVisible.value = _scrollController.offset >= 100;
     });
 
-    _projectsFuture = GitHubService('Nyouibou').fetchProjects();
+    _projectsFuture = GitHubService().fetchProjects();
   }
 
   @override
@@ -52,10 +49,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Color _generateRandomColor() {
     final random = Random();
     return Color.fromARGB(
-      102, // Alpha value for 0.4 opacity
-      random.nextInt(256), // Red
-      random.nextInt(256), // Green
-      random.nextInt(256), // Blue
+      102,
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
     );
   }
 
@@ -64,7 +61,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(),
-        endDrawer: _buildDrawer(), // Use endDrawer for right-side drawer
+        endDrawer: _buildDrawer(),
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             double maxWidth = constraints.maxWidth;
@@ -75,7 +72,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
               child: Center(
                 child: Column(
                   children: [
-                    SizedBox(height: screenHeight * 0.1), // Adjust based on screen size
+                    SizedBox(height: screenHeight * 0.1),
                     FutureBuilder<List<GitHubProject>>(
                       future: _projectsFuture,
                       builder: (context, snapshot) {
@@ -86,20 +83,18 @@ class _ProjectScreenState extends State<ProjectScreen> {
                         } else if (snapshot.hasData) {
                           final projects = snapshot.data!;
                           return Wrap(
-                            spacing: 16.0, // Horizontal space between cards
-                            runSpacing: 16.0, // Vertical space between cards
+                            spacing: 16.0,
+                            runSpacing: 16.0,
                             children: projects.map((project) {
                               return SizedBox(
-                                width: min(maxWidth * 0.9, 1400), // Responsive width with max limit
+                                width: min(maxWidth * 0.9, 1400),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.5),
                                   child: Tilt(
-                                    tiltConfig: TiltConfig(
-                                      angle: 20, // Adjust the tilt angle
-                                    ),
+                                    tiltConfig: TiltConfig(angle: 20),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: _generateRandomColor(), // Assign a random color with opacity
+                                        color: _generateRandomColor(),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ProjectCard(project: project),
@@ -114,7 +109,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                         }
                       },
                     ),
-                    SizedBox(height: screenHeight * 0.1), // Additional spacing before the contact card
+                    SizedBox(height: screenHeight * 0.1),
                     Contactcard(),
                   ],
                 ),
@@ -143,47 +138,27 @@ class _ProjectScreenState extends State<ProjectScreen> {
 
   Widget _buildDrawer() {
     return Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              ListTile(
-                title: Text('Home', style: NeededTextstyles.heading1),
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('About Me', style: NeededTextstyles.heading1),
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => AboutmeScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('Projects', style: NeededTextstyles.heading1),
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => ProjectScreen()),
-                  );
-                },
-              ),
-              ListTile(
-                title: Text('Contact', style: NeededTextstyles.heading1),
-                onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => ContactScreen()),
-                  );
-                },
-              ),
-            ],
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          ListTile(
+            title: Text('Home', style: NeededTextstyles.heading1),
+            onTap: () => context.go('/home'),
           ),
-        );
+          ListTile(
+            title: Text('About Me', style: NeededTextstyles.heading1),
+            onTap: () => context.go('/about'),
+          ),
+          ListTile(
+            title: Text('Projects', style: NeededTextstyles.heading1),
+            onTap: () => context.go('/projects'),
+          ),
+          ListTile(
+            title: Text('Contact', style: NeededTextstyles.heading1),
+            onTap: () => context.go('/contact'),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -2,6 +2,11 @@
 
 import 'package:flutter/material.dart';
 
+class AppConstants {
+  static const String githubUsername = 'txngerine';
+  static const String email = 'akshaits4@gmail.com';
+}
+
 class NeededTextstyles {
   static TextStyle heading1 = TextStyle(
     fontFamily: 'gilroy',

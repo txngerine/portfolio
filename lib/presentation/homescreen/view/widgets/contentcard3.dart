@@ -24,16 +24,15 @@ class ContentCard3 extends StatelessWidget {
         bool isSmallScreen = constraints.maxWidth < 600;
         bool isTablet = constraints.maxWidth >= 600 && constraints.maxWidth < 1024;
 
-        // Define responsive text style
         TextStyle responsiveTextStyle(TextStyle baseStyle) {
           double fontSize;
 
           if (isSmallScreen) {
-            fontSize = 36.0; // Smaller font size for mobile
+            fontSize = 36.0;
           } else if (isTablet) {
-            fontSize = 36.0; // Medium font size for tablets
+            fontSize = 36.0;
           } else {
-            fontSize = 40.0; // Default font size for larger screens
+            fontSize = 40.0;
           }
 
           return baseStyle.copyWith(
@@ -85,7 +84,7 @@ class ContentCard3 extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       _launchURL(
-                          "https://github.com/nyouibou/Quiz_app_main.git");
+                          "https://github.com/${AppConstants.githubUsername}/Quiz_app_main.git");
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +135,7 @@ class ContentCard3 extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           _launchURL(
-                              "https://github.com/nyouibou/Quiz_app_main.git");
+                              "https://github.com/${AppConstants.githubUsername}/Quiz_app_main.git");
                         },
                         child: Row(
                           children: [

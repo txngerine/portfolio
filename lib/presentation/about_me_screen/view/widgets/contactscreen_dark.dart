@@ -1,121 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:portfolio/core/constant/textconstant.dart';
-// import 'package:url_launcher/url_launcher.dart';
-
-// class ContactcardDark extends StatelessWidget {
-//   const ContactcardDark({
-//     super.key,
-//   });
-
-//   void _launchURL(String urlString) async {
-//     final Uri url = Uri.parse(urlString);
-//     if (await canLaunchUrl(url)) {
-//       await launchUrl(url);
-//     } else {
-//       throw 'Could not launch $urlString';
-//     }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: Colors.transparent,
-//       height: 500,
-//       width: 1200,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             mainAxisSize: MainAxisSize.max,
-//             children: [
-//               Row(
-//                 children: [
-//                   Column(
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         "Let's connect ",
-//                         style: NeededTextstyles.ultimatemaxwhite,
-//                       ),
-//                       Text(
-//                         "digitally",
-//                         style: NeededTextstyles.ultimatemaxwhite,
-//                       ),
-//                       SizedBox(
-//                         height: 100,
-//                       ),
-//                       Text(
-//                         "© 2024 AKSHAY TS",
-//                         style: NeededTextstyles.littletextdark,
-//                       ),
-//                     ],
-//                   ),
-//                   SizedBox(
-//                     width: 440,
-//                   ),
-//                   Column(
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       InkWell(
-//                         onTap: () {
-//                           _launchURL('mailto:akshaits4@gmail.com');
-//                         },
-//                         child: Text(
-//                           "Email",
-//                           style: NeededTextstyles.contactsnamedark,
-//                         ),
-//                       ),
-//                       InkWell(
-//                         onTap: () {
-//                           _launchURL('https://instagram.com/akshaiiii.i');
-//                         },
-//                         child: Text(
-//                           "Instagram",
-//                           style: NeededTextstyles.contactsnamedark,
-//                         ),
-//                       ),
-//                       InkWell(
-//                         onTap: () {
-//                           _launchURL('https://twitter.com/yourusername');
-//                         },
-//                         child: Text(
-//                           "Twitter",
-//                           style: NeededTextstyles.contactsnamedark,
-//                         ),
-//                       ),
-//                       InkWell(
-//                         onTap: () {
-//                           _launchURL('https://github.com/nyouibou');
-//                         },
-//                         child: Text(
-//                           "Github",
-//                           style: NeededTextstyles.contactsnamedark,
-//                         ),
-//                       ),
-//                       InkWell(
-//                         onTap: () {
-//                           _launchURL('https://linkedin.com/in/akshai-t-s');
-//                         },
-//                         child: Text(
-//                           "LinkedIn",
-//                           style: NeededTextstyles.contactsnamedark,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:portfolio/core/constant/textconstant.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -134,28 +16,26 @@ class ContactcardDark extends StatelessWidget {
     }
   }
 
-  // Helper method to get responsive width
   double _getResponsiveWidth(BuildContext context, List<double> widths) {
     double screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth >= 1200) {
-      return widths[0]; // Large screens
+      return widths[0];
     } else if (screenWidth >= 800) {
-      return widths[1]; // Medium screens
+      return widths[1];
     } else {
-      return widths[2]; // Small screens
+      return widths[2];
     }
   }
 
-  // Helper method to get responsive text size
   double _getResponsiveFontSize(
       BuildContext context, double baseFontSize, List<double> sizes) {
     double screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth >= 1200) {
-      return sizes[0]; // Large screens
+      return sizes[0];
     } else if (screenWidth >= 800) {
-      return sizes[1]; // Medium screens
+      return sizes[1];
     } else {
-      return sizes[2]; // Small screens
+      return sizes[2];
     }
   }
 
@@ -171,7 +51,6 @@ class ContactcardDark extends StatelessWidget {
 
     return Container(
       color: Colors.transparent,
-      // height: 500,
       width: double.infinity,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -201,7 +80,7 @@ class ContactcardDark extends StatelessWidget {
                         height: 100,
                       ),
                       Text(
-                        "© 2024 AKSHAY TS",
+                        "© 2026 AKSHAY TS",
                         style: NeededTextstyles.littletextdark
                             .copyWith(fontSize: littletextFontSize),
                       ),
@@ -217,7 +96,7 @@ class ContactcardDark extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        _launchURL('mailto:akshaits4@gmail.com');
+                        _launchURL('mailto:${AppConstants.email}');
                       },
                       child: Text(
                         "Email",
@@ -247,7 +126,8 @@ class ContactcardDark extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _launchURL('https://github.com/nyouibou');
+                        _launchURL(
+                            'https://github.com/${AppConstants.githubUsername}');
                       },
                       child: Text(
                         "Github",
